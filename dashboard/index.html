@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GymVision AI — Local Access Console</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1118;--panel:#121c26;--line:#263442;--text:#e8f0f4;--muted:#91a3ae;--mint:#5ce0b4;--red:#ff7777;--amber:#f4bd61}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#143b38 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 Segoe UI,system-ui,sans-serif}
+    header{display:flex;justify-content:space-between;align-items:center;padding:22px max(24px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line);background:#0b1118d9;position:sticky;top:0;backdrop-filter:blur(12px);z-index:2}
+    .brand{display:flex;gap:12px;align-items:center;font-size:18px;font-weight:700;letter-spacing:.02em}.mark{width:35px;height:35px;border:1px solid #438e7b;border-radius:11px;display:grid;place-items:center;color:var(--mint);font-size:20px}
+    .status{color:var(--muted);font-size:13px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mint);margin-right:7px;box-shadow:0 0 12px #5ce0b488}
+    main{max-width:1180px;margin:auto;padding:44px 24px 72px}.eyebrow{color:var(--mint);font-size:11px;letter-spacing:.19em;font-weight:700;text-transform:uppercase}.hero{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:28px}h1{font-size:clamp(30px,5vw,46px);line-height:1.08;margin:9px 0 10px;letter-spacing:-.04em}.sub{color:var(--muted);max-width:660px;margin:0}.badge{border:1px solid #705b2d;background:#2b2416;color:var(--amber);border-radius:99px;padding:7px 12px;font-size:12px;white-space:nowrap}
+    .notice{border:1px solid #725c30;background:#221e15;border-radius:12px;padding:13px 16px;color:#dbc99f;margin:22px 0 26px;font-size:13px}.notice strong{color:var(--amber)}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}.metric,.panel{background:linear-gradient(145deg,#14202b,#101821);border:1px solid var(--line);border-radius:16px}.metric{padding:18px 20px}.metric label{color:var(--muted);font-size:12px}.metric strong{display:block;font-size:29px;margin-top:5px;letter-spacing:-.04em}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{padding:20px}.panel h2{font-size:17px;margin:0 0 5px}.hint{color:var(--muted);font-size:12px;margin:0 0 18px}.field{display:grid;gap:6px;margin:12px 0}.field label{color:#b6c5cc;font-size:12px}.field input{width:100%;background:#0c141b;border:1px solid #30404d;color:var(--text);padding:11px 12px;border-radius:9px;font:inherit}.field input:focus{outline:1px solid var(--mint);border-color:var(--mint)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.check{display:flex;align-items:start;gap:9px;color:#bfccd2;font-size:12px;margin:15px 0}.check input{accent-color:var(--mint);margin-top:3px}.btn{border:0;border-radius:9px;background:var(--mint);color:#06221b;font-weight:700;padding:11px 15px;cursor:pointer}.btn:hover{filter:brightness(1.07)}.btn.secondary{background:#263944;color:#d9e8ed}.btn.danger{background:#412226;color:#ffb2b2}.actions{display:flex;gap:8px;flex-wrap:wrap}.msg{min-height:20px;color:var(--muted);font-size:12px;margin-top:8px}.login{max-width:460px;margin:48px auto}.hidden{display:none!important}
+    .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px;border-bottom:1px solid var(--line)}td{padding:12px 10px;border-bottom:1px solid #202c36}tr:last-child td{border-bottom:0}.pill{font-size:11px;border-radius:99px;padding:4px 8px;background:#173d32;color:#77e5c1}.pill.denied{background:#432628;color:#ff9292}.empty{color:var(--muted);padding:20px 10px}
+    .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.member-row{display:grid;grid-template-columns:1.5fr 1fr 1fr auto;gap:8px;align-items:center;border-top:1px solid var(--line);padding:11px 0;font-size:13px}.member-row:first-child{border-top:0}.small{font-size:11px;color:var(--muted)}footer{text-align:center;color:#667783;font-size:11px;margin-top:32px}
+    @media(max-width:760px){header{padding:16px 18px}.hero{display:block}.badge{display:inline-block;margin-top:14px}.grid{grid-template-columns:1fr}.metrics{gap:8px}.metric{padding:14px}.metric strong{font-size:24px}.member-row{grid-template-columns:1fr 1fr}.member-row .actions{grid-column:1/-1}}
+  </style>
+</head>
+<body>
+<header><div class="brand"><span class="mark">G</span> GymVision <span style="color:var(--mint)">AI</span></div><div class="status"><span class="dot"></span>Local demo console</div></header>
+<main>
+  <section class="hero"><div><div class="eyebrow">Access management · MVP</div><h1>Good access starts<br>with a clear decision.</h1><p class="sub">Enroll a demo member, validate a synthetic check-in, and review the decision trail from one local console.</p></div><span class="badge">DEMO INPUTS · NOT BIOMETRIC EVIDENCE</span></section>
+  <div class="notice"><strong>Demo mode:</strong> recognition vectors are synthetic; liveness is an operator-entered score. Data lives in memory and clears when the server restarts. No camera or face model is connected.</div>
+  <section id="login" class="panel login"><h2>Admin sign in</h2><p class="hint">Use the credentials set in your local environment.</p><form id="login-form"><div class="field"><label for="username">Username</label><input id="username" autocomplete="username" required></div><div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div><button class="btn" type="submit">Open console</button><div id="login-msg" class="msg"></div></form></section>
+  <section id="console" class="hidden">
+    <div class="metrics"><div class="metric"><label>Enrolled members</label><strong id="member-count">0</strong></div><div class="metric"><label>Allowed check-ins</label><strong id="allowed-count">0</strong></div><div class="metric"><label>Denied check-ins</label><strong id="denied-count">0</strong></div></div>
+    <div class="grid">
+      <section class="panel"><h2>Enroll a member</h2><p class="hint">Consent is required. A random synthetic 512-value vector is generated for this session.</p>
+        <form id="enroll-form"><div class="field"><label for="full-name">Full name</label><input id="full-name" maxlength="150" required></div><div class="row"><div class="field"><label for="phone">Phone (E.164)</label><input id="phone" placeholder="+201012345678" pattern="\+[1-9][0-9]{7,14}" required></div><div class="field"><label for="email">Email (optional)</label><input id="email" type="email" maxlength="255"></div></div><div class="row"><div class="field"><label for="start">Membership starts</label><input id="start" type="date" required></div><div class="field"><label for="end">Membership ends</label><input id="end" type="date" required></div></div><label class="check"><input id="consent" type="checkbox" required><span>Demo consent recorded. This checkbox is not a production consent workflow.</span></label><button class="btn" type="submit">Enroll with synthetic vector</button><div id="enroll-msg" class="msg"></div></form>
+      </section>
+      <section class="panel"><h2>Run a check-in</h2><p class="hint">Uses the most recently enrolled demo vector with a tiny synthetic variation.</p><div class="field"><label for="liveness">Demo liveness score <span id="live-value">0.95</span></label><input id="liveness" type="range" min="0" max="1" step="0.01" value="0.95"></div><div class="actions"><button id="check-in" class="btn" type="button">Evaluate access</button><button id="logout" class="btn secondary" type="button">Sign out</button></div><div id="checkin-msg" class="msg"></div><div id="decision" class="hidden"></div></section>
+    </div>
+    <section class="panel" style="margin-top:16px"><div class="section-title"><div><h2>Members</h2><p class="hint" style="margin:3px 0 0">Consent revocation removes that member's synthetic vector from demo memory.</p></div><button id="refresh" class="btn secondary" type="button">Refresh</button></div><div id="members-list"></div></section>
+    <section class="panel" style="margin-top:16px"><div class="section-title"><div><h2>Recent access activity</h2><p class="hint" style="margin:3px 0 0">Decision and reason are recorded for every demo attempt.</p></div></div><div class="table-wrap"><table><thead><tr><th>Time</th><th>Member</th><th>Decision</th><th>Reason</th><th>Similarity</th><th>Liveness</th></tr></thead><tbody id="logs"><tr><td class="empty" colspan="6">No check-ins yet.</td></tr></tbody></table></div></section>
+  </section>
+  <footer>GYMVISION AI · LOCAL-FIRST MVP · NOT FOR LIVE ACCESS CONTROL</footer>
+</main>
+<script>
+  let token = "";
+  let demoEmbedding = null;
+  const byId = id => document.getElementById(id);
+  async function api(path, options={}) {
+    const response = await fetch(path, { ...options, headers: { "Content-Type":"application/json", ...(token ? {"Authorization":`Bearer ${token}`} : {}), ...(options.headers || {}) } });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.detail || `Request failed (${response.status})`);
+    return data;
+  }
+  byId("login-form").addEventListener("submit", async event => {
+    event.preventDefault(); byId("login-msg").textContent = "Signing in…";
+    try { const data = await api("/api/session", {method:"POST", body:JSON.stringify({username:byId("username").value,password:byId("password").value})}); token=data.access_token; byId("login").classList.add("hidden"); byId("console").classList.remove("hidden"); await refresh(); }
+    catch(error) { byId("login-msg").textContent=error.message; }
+  });
+  byId("enroll-form").addEventListener("submit", async event => {
+    event.preventDefault(); byId("enroll-msg").textContent="Creating synthetic demo vector…";
+    try {
+      const vectorData=await api("/api/demo/vector",{method:"POST",body:"{}"}); demoEmbedding=vectorData.embedding;
+      const data=await api("/api/members",{method:"POST",body:JSON.stringify({full_name:byId("full-name").value,phone:byId("phone").value,email:byId("email").value||null,consent_granted:byId("consent").checked,embedding:demoEmbedding,membership_start:byId("start").value,membership_end:byId("end").value})});
+      byId("enroll-msg").textContent=`Enrolled ${data.full_name}. Keep this page open for the matching demo check-in.`; event.target.reset(); await refresh();
+    } catch(error) { demoEmbedding=null; byId("enroll-msg").textContent=error.message; }
+  });
+  byId("liveness").addEventListener("input",event=>byId("live-value").textContent=Number(event.target.value).toFixed(2));
+  byId("check-in").addEventListener("click",async()=>{
+    byId("checkin-msg").textContent=""; byId("decision").classList.add("hidden");
+    if(!demoEmbedding){byId("checkin-msg").textContent="Enroll a demo member in this browser session first.";return;}
+    const probe=demoEmbedding.map(value=>value+(Math.random()-0.5)*0.012);
+    try { const result=await api("/api/check-in",{method:"POST",body:JSON.stringify({embedding:probe,liveness_score:Number(byId("liveness").value)})});
+      const box=byId("decision"); box.className="notice"; box.innerHTML="";
+      const label=document.createElement("strong"); label.textContent=`${result.decision.toUpperCase()} · ${result.reason.replaceAll("_"," ")}`; box.append(label,document.createTextNode(result.member_name?` — ${result.member_name} · similarity ${result.similarity_score}`:" — no member match"));
+      await refresh();
+    } catch(error){byId("checkin-msg").textContent=error.message;}
+  });
+  byId("refresh").addEventListener("click",refresh);
+  byId("logout").addEventListener("click",async()=>{try{await api("/api/session",{method:"DELETE"});}catch{}token="";demoEmbedding=null;byId("console").classList.add("hidden");byId("login").classList.remove("hidden");byId("password").value="";});
+  async function setStatus(id,status){try{await api(`/api/members/${id}/status`,{method:"PATCH",body:JSON.stringify({member_status:status})});await refresh();}catch(e){alert(e.message);}}
+  async function revoke(id){if(!confirm("Revoke consent and delete the synthetic vector from demo memory?"))return;try{await api(`/api/members/${id}/revoke-consent`,{method:"POST",body:JSON.stringify({confirmed:true})});await refresh();}catch(e){alert(e.message);}}
+  async function refresh(){
+    try {
+      const data=await api("/api/dashboard"); byId("member-count").textContent=data.member_count; byId("allowed-count").textContent=data.allowed_today; byId("denied-count").textContent=data.denied_today;
+      const list=byId("members-list"); list.replaceChildren();
+      if(!data.members.length){list.innerHTML='<div class="empty">No members enrolled.</div>';}
+      for(const m of data.members){
+        const row=document.createElement("div");row.className="member-row";
+        const name=document.createElement("strong");name.textContent=m.full_name;
+        const phone=document.createElement("span");phone.textContent=m.phone;
+        const state=document.createElement("span");state.className="small";state.textContent=`${m.member_status} · consent ${m.consent_granted?"granted":"revoked"}`;
+        const actions=document.createElement("div");actions.className="actions";
+        const status=document.createElement("button");status.className="btn secondary";status.type="button";status.textContent=m.member_status==="active"?"Suspend":"Activate";status.onclick=()=>setStatus(m.member_id,m.member_status==="active"?"suspended":"active");actions.append(status);
+        const consent=document.createElement("button");consent.className="btn danger";consent.type="button";consent.textContent="Revoke consent";consent.disabled=!m.consent_granted;consent.onclick=()=>revoke(m.member_id);actions.append(consent);
+        row.append(name,phone,state,actions);list.append(row);
+      }
+      const logs=byId("logs");logs.replaceChildren();
+      if(!data.recent_logs.length){const tr=document.createElement("tr");tr.innerHTML='<td class="empty" colspan="6">No check-ins yet.</td>';logs.append(tr);}
+      for(const item of data.recent_logs){const tr=document.createElement("tr");const cells=[new Date(item.accessed_at).toLocaleTimeString(),item.member_name||"Unknown face",item.access_decision,item.reason.replaceAll("_"," "),item.similarity_score??"—",Number(item.liveness_score).toFixed(2)];cells.forEach((value,index)=>{const td=document.createElement("td");if(index===2){const pill=document.createElement("span");pill.className=`pill ${value==="denied"?"denied":""}`;pill.textContent=value.toUpperCase();td.append(pill);}else td.textContent=value;tr.append(td);});logs.append(tr);}
+    }catch(error){byId("checkin-msg").textContent=error.message;}
+  }
+  const today=new Date().toISOString().slice(0,10);byId("start").value=today;const month=new Date();month.setMonth(month.getMonth()+1);byId("end").value=month.toISOString().slice(0,10);
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# Local OS files
+desktop.ini
+Thumbs.db
+
+# Local model files
+*.onnx
+*.pth
+*.pt
+*.safetensors
+
+# Local data and secrets
+.env.*
+!.env.example
+*.db
+*.sqlite3
