@@ -14,16 +14,18 @@ class EnrollmentRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     full_name: Annotated[str, StringConstraints(strip_whitespace=True, min_length=2, max_length=150)]
-    phone: Phone
+    phone: Phone | None = None
     email: Annotated[str | None, StringConstraints(strip_whitespace=True, max_length=255)] = None
     consent_granted: bool
-    embedding: Embedding
+    embedding: Embedding | None = None
     membership_start: date
     membership_end: date
 
     @field_validator("embedding")
     @classmethod
-    def embedding_must_be_finite(cls, value: list[float]) -> list[float]:
+    def embedding_must_be_finite(cls, value: list[float] | None) -> list[float] | None:
+        if value is None:
+            return None
         import math
 
         if not all(math.isfinite(item) for item in value):
@@ -51,12 +53,16 @@ class EnrollmentRequest(BaseModel):
 class CheckInRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    embedding: Embedding
-    liveness_score: Annotated[float, Field(ge=0, le=1)]
+    member_id: UUID | None = None
+    embedding: Embedding | None = None
+    liveness_score: Annotated[float, Field(ge=0, le=1)] | None = None
+    consent_confirmed: bool = False
 
     @field_validator("embedding")
     @classmethod
-    def embedding_must_be_finite(cls, value: list[float]) -> list[float]:
+    def embedding_must_be_finite(cls, value: list[float] | None) -> list[float] | None:
+        if value is None:
+            return None
         import math
 
         if not all(math.isfinite(item) for item in value):
@@ -79,10 +85,10 @@ class ConsentRevocation(BaseModel):
 
 
 class CheckInResponse(BaseModel):
-    decision: str
+    access_decision: str
     reason: str
     member_id: UUID | None
     member_name: str | None
     similarity_score: float | None
-    liveness_score: float
+    liveness_score: float | None
     accessed_at: str

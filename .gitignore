@@ -7,6 +7,43 @@ __pycache__/
 .coverage
 htmlcov/
 *.log
+*.log.*
+*.tmp
+*.bak
+*.swp
+
+# Local builds and demo bundles
+/dist/
+/build/
+
+# Private photographs and original screenshots (redacted copies live in docs/screenshots/)
+/test_images/
+/ScreenShots/
+/private_face_images/
+/face-captures/
+/camera-captures/
+/biometric-data/
+/embeddings/
+
+# Local benchmark and diagnostic outputs
+/benchmark-results/
+/diagnostic-results/
+/benchmark_*.csv
+/*_benchmark*.csv
+/*_diagnostic*.csv
+
+# Local biometric artifacts
+*.embedding
+*.embeddings
+*embedding*.json
+*embedding*.csv
+*.npy
+*.npz
+
+# Local database files
+*.db
+*.sqlite
+*.sqlite3
 
 # Local OS files
 desktop.ini
@@ -21,5 +58,3 @@ Thumbs.db
 # Local data and secrets
 .env.*
 !.env.example
-*.db
-*.sqlite3

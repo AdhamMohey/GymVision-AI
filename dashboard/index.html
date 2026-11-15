@@ -5,96 +5,297 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GymVision AI — Local Access Console</title>
   <style>
-    :root{color-scheme:dark;--bg:#0b1118;--panel:#121c26;--line:#263442;--text:#e8f0f4;--muted:#91a3ae;--mint:#5ce0b4;--red:#ff7777;--amber:#f4bd61}
-    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -20%,#143b38 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 Segoe UI,system-ui,sans-serif}
-    header{display:flex;justify-content:space-between;align-items:center;padding:22px max(24px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line);background:#0b1118d9;position:sticky;top:0;backdrop-filter:blur(12px);z-index:2}
-    .brand{display:flex;gap:12px;align-items:center;font-size:18px;font-weight:700;letter-spacing:.02em}.mark{width:35px;height:35px;border:1px solid #438e7b;border-radius:11px;display:grid;place-items:center;color:var(--mint);font-size:20px}
-    .status{color:var(--muted);font-size:13px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mint);margin-right:7px;box-shadow:0 0 12px #5ce0b488}
-    main{max-width:1180px;margin:auto;padding:44px 24px 72px}.eyebrow{color:var(--mint);font-size:11px;letter-spacing:.19em;font-weight:700;text-transform:uppercase}.hero{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:28px}h1{font-size:clamp(30px,5vw,46px);line-height:1.08;margin:9px 0 10px;letter-spacing:-.04em}.sub{color:var(--muted);max-width:660px;margin:0}.badge{border:1px solid #705b2d;background:#2b2416;color:var(--amber);border-radius:99px;padding:7px 12px;font-size:12px;white-space:nowrap}
-    .notice{border:1px solid #725c30;background:#221e15;border-radius:12px;padding:13px 16px;color:#dbc99f;margin:22px 0 26px;font-size:13px}.notice strong{color:var(--amber)}
-    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}.metric,.panel{background:linear-gradient(145deg,#14202b,#101821);border:1px solid var(--line);border-radius:16px}.metric{padding:18px 20px}.metric label{color:var(--muted);font-size:12px}.metric strong{display:block;font-size:29px;margin-top:5px;letter-spacing:-.04em}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{padding:20px}.panel h2{font-size:17px;margin:0 0 5px}.hint{color:var(--muted);font-size:12px;margin:0 0 18px}.field{display:grid;gap:6px;margin:12px 0}.field label{color:#b6c5cc;font-size:12px}.field input{width:100%;background:#0c141b;border:1px solid #30404d;color:var(--text);padding:11px 12px;border-radius:9px;font:inherit}.field input:focus{outline:1px solid var(--mint);border-color:var(--mint)}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.check{display:flex;align-items:start;gap:9px;color:#bfccd2;font-size:12px;margin:15px 0}.check input{accent-color:var(--mint);margin-top:3px}.btn{border:0;border-radius:9px;background:var(--mint);color:#06221b;font-weight:700;padding:11px 15px;cursor:pointer}.btn:hover{filter:brightness(1.07)}.btn.secondary{background:#263944;color:#d9e8ed}.btn.danger{background:#412226;color:#ffb2b2}.actions{display:flex;gap:8px;flex-wrap:wrap}.msg{min-height:20px;color:var(--muted);font-size:12px;margin-top:8px}.login{max-width:460px;margin:48px auto}.hidden{display:none!important}
-    .table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:10px;border-bottom:1px solid var(--line)}td{padding:12px 10px;border-bottom:1px solid #202c36}tr:last-child td{border-bottom:0}.pill{font-size:11px;border-radius:99px;padding:4px 8px;background:#173d32;color:#77e5c1}.pill.denied{background:#432628;color:#ff9292}.empty{color:var(--muted);padding:20px 10px}
-    .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}.member-row{display:grid;grid-template-columns:1.5fr 1fr 1fr auto;gap:8px;align-items:center;border-top:1px solid var(--line);padding:11px 0;font-size:13px}.member-row:first-child{border-top:0}.small{font-size:11px;color:var(--muted)}footer{text-align:center;color:#667783;font-size:11px;margin-top:32px}
-    @media(max-width:760px){header{padding:16px 18px}.hero{display:block}.badge{display:inline-block;margin-top:14px}.grid{grid-template-columns:1fr}.metrics{gap:8px}.metric{padding:14px}.metric strong{font-size:24px}.member-row{grid-template-columns:1fr 1fr}.member-row .actions{grid-column:1/-1}}
+    :root{color-scheme:dark;--bg:#0A0F14;--panel:#111922;--raised:#18222D;--line:#263444;--text:#F3F7FA;--secondary:#B4C0CC;--muted:#8A98A8;--mint:#3DDBA8;--green:#34D399;--red:#F87171;--amber:#FBBF24;--blue:#60A5FA;--shadow:0 14px 38px #0003}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 82% -22%,#173a35 0,transparent 38%),var(--bg);color:var(--text);font:15px/1.5 "Segoe UI",system-ui,sans-serif;min-height:100vh}button,input,select{font:inherit}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+    header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px max(24px,calc((100vw - 1180px)/2));border-bottom:1px solid var(--line);background:#0a0f14ed;position:sticky;top:0;backdrop-filter:blur(12px);z-index:2;min-height:66px}
+    .brand{display:flex;gap:10px;align-items:center;font-size:17px;font-weight:700;letter-spacing:.01em;white-space:nowrap}.mark{width:35px;height:35px;border:1px solid #438e7b;border-radius:11px;display:grid;place-items:center;color:var(--mint);font-size:20px;background:#11221e}.header-meta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}.status{color:var(--secondary);font-size:13px;white-space:nowrap}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:7px;box-shadow:0 0 12px #34d39988}.privacy{border:1px solid #245543;background:#10221c;color:#a6ebd2;border-radius:99px;padding:5px 10px;font-size:11px;white-space:nowrap}
+    main{max-width:1180px;margin:auto;padding:26px 24px 56px}.eyebrow{color:var(--mint);font-size:11px;letter-spacing:.16em;font-weight:700;text-transform:uppercase}.hero{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:18px}h1{font-size:clamp(28px,4vw,38px);line-height:1.12;margin:7px 0 7px;letter-spacing:-.035em}.sub{color:var(--secondary);max-width:660px;margin:0}.badge{border:1px solid #705b2d;background:#2b2416;color:var(--amber);border-radius:99px;padding:7px 12px;font-size:11px;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+    .notice{border:1px solid #725c30;background:#221e15;border-radius:14px;padding:18px 20px;color:#dbc99f;margin:18px 0;font-size:14px;box-shadow:var(--shadow)}.notice strong{display:block;color:var(--amber);font-size:22px;letter-spacing:.02em;margin-bottom:4px}.notice.access-granted{border-color:#28775f;background:linear-gradient(115deg,#10271f,#132c25);color:#b8eedc}.notice.access-granted strong{color:#77e5c1}.notice.access-denied{border-color:#8a4148;background:linear-gradient(115deg,#30191d,#281a20);color:#ffd0d0}.notice.access-denied strong{color:#ff9292}.notice.access-unknown{border-color:#806522;background:linear-gradient(115deg,#2b2416,#292317);color:#f6e4b5}.notice.access-unknown strong{color:#f4bd61}.decision-details{color:var(--secondary);font-size:13px}.decision-score{display:flex;align-items:center;gap:12px;margin-top:13px;max-width:360px}.score-track{height:6px;flex:1;overflow:hidden;border-radius:99px;background:#07100e}.score-fill{display:block;height:100%;border-radius:inherit;background:currentColor;opacity:.9}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 18px}.metric,.panel{background:linear-gradient(145deg,var(--panel),#10171f);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.metric{padding:14px 18px;position:relative;overflow:hidden}.metric:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;background:var(--metric-accent,var(--mint));border-radius:0 4px 4px 0}.metric:nth-child(2){--metric-accent:var(--green)}.metric:nth-child(3){--metric-accent:var(--red)}.metric label{color:var(--secondary);font-size:13px}.metric strong{display:block;font-size:28px;margin-top:1px;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}.panel{padding:18px}.grid>.panel:nth-child(2){border-color:#31574f;box-shadow:0 0 0 1px #3ddba80b,var(--shadow)}.panel h2{font-size:17px;margin:0 0 4px;letter-spacing:-.01em}.hint{color:var(--secondary);font-size:13px;margin:0 0 15px}.field{display:grid;gap:6px;margin:10px 0}.field label{color:var(--secondary);font-size:13px}.field input,.field select{width:100%;background:#0c141b;border:1px solid #30404d;color:var(--text);padding:10px 12px;border-radius:10px;font:inherit;transition:border-color .18s,box-shadow .18s}.field input:focus,.field select:focus{outline:0;border-color:var(--mint);box-shadow:0 0 0 3px #3ddba822}.field input:-webkit-autofill,.field input:-webkit-autofill:hover,.field input:-webkit-autofill:focus{box-shadow:0 0 0 1000px #0c141b inset;-webkit-text-fill-color:var(--text);caret-color:var(--text)}.field-error{min-height:0;color:var(--red);font-size:12px}.field-error:empty{display:none}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.check{display:flex;align-items:start;gap:9px;color:var(--secondary);font-size:13px;margin:14px 0}.check input{accent-color:var(--mint);margin-top:4px;flex:0 0 auto}.btn{border:0;border-radius:10px;background:var(--mint);color:#06221b;font-weight:700;padding:10px 15px;cursor:pointer;transition:filter .16s,transform .16s,background .16s}.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}.btn:disabled{opacity:.58;cursor:wait;transform:none}.btn.secondary{background:#263944;color:#d9e8ed}.btn.danger{background:#412226;color:#ffb2b2}.actions{display:flex;gap:8px;flex-wrap:wrap}.msg{min-height:20px;color:var(--secondary);font-size:13px;margin-top:8px}.login{max-width:460px;margin:48px auto}.hidden{display:none!important}
+    .table-wrap{overflow:auto}.access-table{width:100%;min-width:640px;table-layout:fixed;border-collapse:collapse;font-size:13px}.access-table th{text-align:left;color:var(--secondary);font-size:11px;text-transform:uppercase;letter-spacing:.08em;padding:11px 10px;border-bottom:1px solid var(--line)}.access-table td{padding:13px 10px;border-bottom:1px solid #202c36;overflow-wrap:anywhere}.access-table tbody tr:not(:last-child):hover{background:#ffffff06}.access-table tr:last-child td{border-bottom:0}.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;border-radius:99px;padding:4px 9px;background:#173d32;color:#77e5c1}.pill.denied{background:#432628;color:#ff9292}.pill.unknown{background:#443817;color:#f4d27f}.empty{color:var(--muted);padding:20px 10px}
+    .camera-modal{width:min(760px,calc(100vw - 28px));max-width:none;padding:0;border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--text);box-shadow:0 24px 80px #0009}.camera-modal::backdrop{background:#03080dc9;backdrop-filter:blur(5px)}.camera-modal-inner{padding:clamp(16px,3vw,26px)}.camera-modal-head{display:flex;justify-content:space-between;align-items:start;gap:12px}.camera-modal-head h2{margin:0;font-size:20px}.camera-status{color:var(--mint);font-size:13px;margin:8px 0}.camera-stage{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:#05090d;border:1px solid #30404d;border-radius:12px;display:grid;place-items:center}.camera-stage img{display:block;width:100%;height:100%;object-fit:contain}.camera-guide{position:absolute;width:min(44%,260px);height:72%;border:2px solid var(--mint);border-radius:48%/42%;box-shadow:0 0 0 999px #06120d22;pointer-events:none}.camera-instructions{color:#c6d4d9;margin:12px 0;font-size:14px}.camera-actions{display:flex;justify-content:flex-end;gap:9px}.camera-close{font-size:24px;line-height:1;padding:4px 9px}.camera-error{color:var(--red);font-size:13px;min-height:20px;margin:8px 0}
+    .section-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:13px}.member-row{display:grid;grid-template-columns:minmax(180px,1.15fr) minmax(110px,.8fr) minmax(110px,.7fr) minmax(220px,1.5fr) auto;gap:10px;align-items:center;border-top:1px solid var(--line);padding:12px 0;font-size:13px}.member-row:first-child{border-top:0}.member-identity{display:flex;align-items:center;gap:10px;min-width:0}.avatar{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;background:#173b33;border:1px solid #286b57;color:#9aefd3;font-size:12px;font-weight:700}.member-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.member-id,.mono{font:12px/1.4 Consolas,"Cascadia Mono",monospace;color:var(--muted);font-variant-numeric:tabular-nums}.member-state{display:flex;flex-wrap:wrap;gap:5px 7px;align-items:center}.state-chip{display:inline-flex;align-items:center;border-radius:99px;padding:3px 8px;background:#26323d;color:var(--secondary);font-size:11px;white-space:nowrap}.state-chip.active,.state-chip.granted{background:#153b30;color:#83e6c4}.state-chip.suspended,.state-chip.revoked{background:#3c3030;color:#ffc0b3}.small{font-size:12px;color:var(--muted)}footer{text-align:center;color:#667783;font-size:11px;margin-top:28px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}.grid>.panel:nth-child(2){order:-1}.member-row{grid-template-columns:minmax(180px,1fr) minmax(110px,.7fr) minmax(210px,1.2fr)}.member-row>.small:nth-child(3){display:none}.member-row .actions{grid-column:1/-1}}
+    @media(max-width:760px){header{padding:11px 16px}.header-meta{gap:8px}.privacy{display:none}main{padding:20px 16px 42px}.hero{display:block;margin-bottom:14px}.metrics{gap:8px;margin:12px 0}.metric{padding:12px 12px 12px 15px}.metric label{font-size:11px}.metric strong{font-size:23px}.panel{padding:16px}.member-row{grid-template-columns:minmax(0,1fr) auto;gap:8px}.member-row>.small:nth-child(3){display:block;grid-column:1/-1}.member-state{grid-column:1/-1}.member-row .actions{grid-column:1/-1}.camera-stage{aspect-ratio:3/4}.camera-guide{height:66%;width:58%}.camera-modal-inner{padding:16px}}
+    @media(max-width:420px){header{align-items:flex-start;flex-wrap:wrap}.brand{font-size:15px}.mark{width:32px;height:32px}.header-meta{width:100%;justify-content:space-between;gap:6px}.header-meta .badge{font-size:9px;padding:5px 7px}.status{font-size:11px}.metrics{grid-template-columns:1fr}.metric{display:flex;justify-content:space-between;align-items:center}.metric strong{margin:0}.row{grid-template-columns:1fr;gap:0}.hero h1 br{display:none}.access-table{min-width:600px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
   </style>
 </head>
 <body>
-<header><div class="brand"><span class="mark">G</span> GymVision <span style="color:var(--mint)">AI</span></div><div class="status"><span class="dot"></span>Local demo console</div></header>
+<header><div class="brand"><span class="mark">G</span> GymVision <span style="color:var(--mint)">AI</span></div><div class="header-meta"><span id="mode-badge" class="badge">SIMULATED · SYNTHETIC INPUTS</span><span class="privacy">On-device Processing · No Images Saved</span><div class="status"><span class="dot"></span>Local Demo</div></div></header>
 <main>
-  <section class="hero"><div><div class="eyebrow">Access management · MVP</div><h1>Good access starts<br>with a clear decision.</h1><p class="sub">Enroll a demo member, validate a synthetic check-in, and review the decision trail from one local console.</p></div><span class="badge">DEMO INPUTS · NOT BIOMETRIC EVIDENCE</span></section>
-  <div class="notice"><strong>Demo mode:</strong> recognition vectors are synthetic; liveness is an operator-entered score. Data lives in memory and clears when the server restarts. No camera or face model is connected.</div>
+  <section class="hero"><div><div class="eyebrow">Smart gym access</div><h1>Intelligent access.<br>Clear decisions.</h1><p class="sub">Intelligent Face Recognition for Secure Gym Access</p></div></section>
   <section id="login" class="panel login"><h2>Admin sign in</h2><p class="hint">Use the credentials set in your local environment.</p><form id="login-form"><div class="field"><label for="username">Username</label><input id="username" autocomplete="username" required></div><div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div><button class="btn" type="submit">Open console</button><div id="login-msg" class="msg"></div></form></section>
   <section id="console" class="hidden">
-    <div class="metrics"><div class="metric"><label>Enrolled members</label><strong id="member-count">0</strong></div><div class="metric"><label>Allowed check-ins</label><strong id="allowed-count">0</strong></div><div class="metric"><label>Denied check-ins</label><strong id="denied-count">0</strong></div></div>
+    <div class="metrics"><div class="metric"><label>Enrolled members</label><strong id="member-count">0</strong></div><div class="metric"><label>Allowed access today</label><strong id="allowed-count">0</strong></div><div class="metric"><label>Denied access today</label><strong id="denied-count">0</strong></div></div>
     <div class="grid">
-      <section class="panel"><h2>Enroll a member</h2><p class="hint">Consent is required. A random synthetic 512-value vector is generated for this session.</p>
-        <form id="enroll-form"><div class="field"><label for="full-name">Full name</label><input id="full-name" maxlength="150" required></div><div class="row"><div class="field"><label for="phone">Phone (E.164)</label><input id="phone" placeholder="+201012345678" pattern="\+[1-9][0-9]{7,14}" required></div><div class="field"><label for="email">Email (optional)</label><input id="email" type="email" maxlength="255"></div></div><div class="row"><div class="field"><label for="start">Membership starts</label><input id="start" type="date" required></div><div class="field"><label for="end">Membership ends</label><input id="end" type="date" required></div></div><label class="check"><input id="consent" type="checkbox" required><span>Demo consent recorded. This checkbox is not a production consent workflow.</span></label><button class="btn" type="submit">Enroll with synthetic vector</button><div id="enroll-msg" class="msg"></div></form>
+      <section class="panel"><h2>Enroll a member</h2><p id="enroll-hint" class="hint">Consent is required. A random synthetic 512-value vector is stored for this simulated workflow.</p>
+        <form id="enroll-form" autocomplete="off"><div class="field"><label for="full-name">Full name</label><input id="full-name" maxlength="150" required></div><div class="row"><div class="field"><label for="phone">Phone (E.164)</label><input id="phone" name="phone" type="tel" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="phone-error" pattern="\+[1-9][0-9]{7,14}" required><span id="phone-error" class="field-error" role="alert"></span></div><div class="field"><label for="email">Email (optional)</label><input id="email" name="email" type="email" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="email-error" maxlength="255"><span id="email-error" class="field-error" role="alert"></span></div></div><div class="row"><div class="field"><label for="start">Membership starts</label><input id="start" type="date" required></div><div class="field"><label for="end">Membership ends</label><input id="end" type="date" required></div></div><label class="check"><input id="consent" type="checkbox" required><span id="consent-copy">Demo consent recorded. This checkbox is not a production consent workflow.</span></label><button id="enroll-submit" class="btn" type="submit">Register Member</button><div id="enroll-msg" class="msg"></div></form>
       </section>
-      <section class="panel"><h2>Run a check-in</h2><p class="hint">Uses the most recently enrolled demo vector with a tiny synthetic variation.</p><div class="field"><label for="liveness">Demo liveness score <span id="live-value">0.95</span></label><input id="liveness" type="range" min="0" max="1" step="0.01" value="0.95"></div><div class="actions"><button id="check-in" class="btn" type="button">Evaluate access</button><button id="logout" class="btn secondary" type="button">Sign out</button></div><div id="checkin-msg" class="msg"></div><div id="decision" class="hidden"></div></section>
+      <section class="panel"><h2>Run a check-in</h2><p id="checkin-hint" class="hint">Select the member being checked. Revoked consent is denied without accessing a vector.</p><label id="checkin-consent-wrap" class="check hidden"><input id="checkin-consent" type="checkbox"><span>The person in view agrees to local face processing for this check-in.</span></label><div id="check-in-member-field" class="field"><label for="check-in-member">Member</label><select id="check-in-member" required><option value="">No members available</option></select></div><div id="liveness-field" class="field"><label for="liveness">Demo liveness score <span id="live-value">0.95</span></label><input id="liveness" type="range" min="0" max="1" step="0.01" value="0.95"></div><div id="liveness-unavailable" class="small hidden">Liveness detection is unavailable in buffalo_s mode; no liveness score is generated or inferred.</div><div class="actions"><button id="check-in" class="btn" type="button">Check In</button><button id="logout" class="btn secondary" type="button">Sign Out</button></div><div id="checkin-msg" class="msg" role="status" aria-live="polite"></div><div id="decision" class="hidden" role="status" aria-live="polite"></div></section>
     </div>
-    <section class="panel" style="margin-top:16px"><div class="section-title"><div><h2>Members</h2><p class="hint" style="margin:3px 0 0">Consent revocation removes that member's synthetic vector from demo memory.</p></div><button id="refresh" class="btn secondary" type="button">Refresh</button></div><div id="members-list"></div></section>
-    <section class="panel" style="margin-top:16px"><div class="section-title"><div><h2>Recent access activity</h2><p class="hint" style="margin:3px 0 0">Decision and reason are recorded for every demo attempt.</p></div></div><div class="table-wrap"><table><thead><tr><th>Time</th><th>Member</th><th>Decision</th><th>Reason</th><th>Similarity</th><th>Liveness</th></tr></thead><tbody id="logs"><tr><td class="empty" colspan="6">No check-ins yet.</td></tr></tbody></table></div></section>
+    <section class="panel" style="margin-top:16px"><div class="section-title"><div><h2>Members</h2><p class="hint" style="margin:3px 0 0">Consent revocation immediately deactivates that member's vector for matching.</p></div><button id="refresh" class="btn secondary" type="button">Refresh List</button></div><div id="members-list"></div></section>
+    <section class="panel" style="margin-top:16px"><div class="section-title"><div><h2>Recent access activity</h2><p class="hint" style="margin:3px 0 0">Decision and reason are recorded for every demo attempt.</p></div></div><div class="table-wrap"><table class="access-table"><colgroup><col style="width:16%"><col style="width:24%"><col style="width:16%"><col style="width:26%"><col style="width:18%"></colgroup><thead><tr><th>Time</th><th>Member</th><th>Decision</th><th>Reason</th><th>Similarity</th></tr></thead><tbody id="logs"><tr><td class="empty" colspan="5">No check-ins yet.</td></tr></tbody></table></div></section>
   </section>
   <footer>GYMVISION AI · LOCAL-FIRST MVP · NOT FOR LIVE ACCESS CONTROL</footer>
 </main>
+<dialog id="camera-modal" class="camera-modal" aria-labelledby="camera-title" aria-modal="true">
+  <div class="camera-modal-inner">
+    <div class="camera-modal-head"><div><h2 id="camera-title">Local camera preview</h2><p id="camera-status" class="camera-status" role="status" aria-live="polite">Camera connecting…</p></div><button id="camera-close" class="btn secondary camera-close" type="button" aria-label="Cancel camera session">×</button></div>
+    <div class="camera-stage"><img id="camera-preview" alt="Live Samsung DroidCam preview"><div class="camera-guide" aria-hidden="true"></div></div>
+    <p class="camera-instructions">Center your face inside the frame.</p>
+    <p id="camera-error" class="camera-error" role="alert"></p>
+    <div class="camera-actions"><button id="camera-cancel" class="btn secondary" type="button">Cancel</button><button id="camera-capture" class="btn" type="button" disabled>Capture</button></div>
+  </div>
+</dialog>
 <script>
   let token = "";
   let demoEmbedding = null;
+  let demoMemberId = null;
+  let knownMembers = [];
+  let recognitionMode = "simulated";
+  let cameraOperation = null;
+  let cameraPollTimer = null;
+  let cameraPreviewUrl = null;
+  let cameraGeneration = 0;
+  let cameraReady = false;
+  let cameraBusy = false;
+  let cameraStarting = false;
   const byId = id => document.getElementById(id);
   async function api(path, options={}) {
     const response = await fetch(path, { ...options, headers: { "Content-Type":"application/json", ...(token ? {"Authorization":`Bearer ${token}`} : {}), ...(options.headers || {}) } });
     const data = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(data.detail || `Request failed (${response.status})`);
+    if (!response.ok) {
+      const detail=data.detail;
+      const error=new Error(typeof detail==="string"?detail:(detail?.message||`Request failed (${response.status})`));
+      if(detail&&typeof detail==="object")error.field=detail.field;
+      throw error;
+    }
     return data;
+  }
+  const cameraModal = byId("camera-modal");
+  function setCameraStatus(text, error=""){
+    byId("camera-status").textContent=text;
+    byId("camera-error").textContent=error;
+  }
+  function stopCameraPolling(clearImage=false){
+    if(cameraPollTimer){clearTimeout(cameraPollTimer);cameraPollTimer=null;}
+    if(clearImage){byId("camera-preview").removeAttribute("src");if(cameraPreviewUrl)URL.revokeObjectURL(cameraPreviewUrl);cameraPreviewUrl=null;}
+  }
+  async function pollCameraFrame(generation){
+    try{
+      const response=await fetch("/api/camera/session/frame",{headers:{Authorization:`Bearer ${token}`}});
+      if(!response.ok)throw new Error(`Preview request failed (${response.status})`);
+      const url=URL.createObjectURL(await response.blob());
+      if(generation!==cameraGeneration){URL.revokeObjectURL(url);return;}
+      const previous=cameraPreviewUrl;cameraPreviewUrl=url;byId("camera-preview").src=url;
+      if(previous)URL.revokeObjectURL(previous);
+    }catch(error){
+      if(generation===cameraGeneration&&!cameraBusy){cameraReady=false;stopCameraPolling();byId("camera-capture").disabled=false;byId("camera-capture").textContent="Reconnect camera";setCameraStatus("Capture failed",error.message);}
+      return;
+    }
+    if(generation===cameraGeneration&&cameraReady)cameraPollTimer=setTimeout(()=>pollCameraFrame(generation),120);
+  }
+  async function startCameraPreview(operation){
+    if(cameraStarting||cameraOperation&&!cameraModal.open)return;
+    cameraStarting=true;
+    cameraGeneration++;const generation=cameraGeneration;cameraOperation=operation;cameraReady=false;cameraBusy=false;
+    byId("camera-capture").disabled=true;byId("camera-capture").textContent="Capture";byId("camera-cancel").textContent="Cancel";byId("camera-close").disabled=false;byId("camera-error").textContent="";stopCameraPolling(true);
+    if(!cameraModal.open)cameraModal.showModal();
+    setCameraStatus("Camera connecting…");
+    try{
+      await api("/api/camera/session",{method:"POST"});
+      if(generation!==cameraGeneration){await api("/api/camera/session",{method:"DELETE"});return;}
+      cameraReady=true;byId("camera-capture").disabled=false;setCameraStatus("Camera ready");pollCameraFrame(generation);
+    }catch(error){
+      if(generation===cameraGeneration){byId("camera-capture").disabled=false;byId("camera-capture").textContent="Reconnect camera";setCameraStatus("Capture failed",error.message);}
+    }finally{cameraStarting=false;}
+  }
+  function renderAccessDecision(result){
+    const box=byId("decision");box.innerHTML="";
+    const reason=String(result.reason||"unspecified");
+    const isUnknown=reason==="unknown_face"||!result.member_id;
+    const tone=result.access_decision==="allowed"?"granted":isUnknown?"unknown":"denied";
+    box.className=`notice access-${tone}`;
+    const label=document.createElement("strong");
+    label.textContent=tone==="granted"?"ACCESS GRANTED":tone==="unknown"?"UNKNOWN PERSON · ACCESS DENIED":"ACCESS DENIED";
+    const details=document.createElement("div");details.className="decision-details";
+    details.textContent=`${reason.replaceAll("_"," ")} · ${result.member_name||"Unknown Person"} · Member ID ${result.member_id||"—"} · membership ${result.membership_status||"—"} · member ${result.member_status||"—"} · similarity ${result.similarity_score??"—"}`;
+    box.append(label,details);
+    const score=Number(result.similarity_score);
+    if(result.similarity_score!==null&&result.similarity_score!==undefined&&Number.isFinite(score)){
+      const scoreWrap=document.createElement("div");scoreWrap.className="decision-score";
+      const scoreLabel=document.createElement("span");scoreLabel.className="small";scoreLabel.textContent=`Similarity ${score.toFixed(3)}`;
+      const track=document.createElement("span");track.className="score-track";track.setAttribute("aria-hidden","true");
+      const fill=document.createElement("span");fill.className="score-fill";fill.style.width=`${Math.max(0,Math.min(1,score))*100}%`;track.append(fill);
+      scoreWrap.append(scoreLabel,track);box.append(scoreWrap);
+    }
+  }
+  async function captureFromCameraModal(){
+    if(!cameraOperation)return;
+    if(!cameraReady){await startCameraPreview(cameraOperation);return;}
+    if(cameraBusy)return;
+    cameraBusy=true;const operation=cameraOperation;const generation=cameraGeneration;
+    byId("camera-capture").disabled=true;setCameraStatus("Detecting face…");
+    try{
+      await new Promise(resolve=>setTimeout(resolve,250));
+      if(generation!==cameraGeneration)return;
+      setCameraStatus("Capturing…");
+      const result=operation.kind==="checkin"
+        ?await api("/api/check-in",{method:"POST",body:JSON.stringify({consent_confirmed:true})})
+        :await api(`/api/members/${operation.memberId}/capture`,{method:"POST",body:"{}"});
+      if(generation!==cameraGeneration)return;
+      cameraReady=false;stopCameraPolling();
+      setCameraStatus("Face detected","");
+      await new Promise(resolve=>setTimeout(resolve,250));
+      if(generation!==cameraGeneration)return;
+      setCameraStatus("Capture successful","");byId("camera-cancel").textContent="Done";byId("camera-close").disabled=false;
+      if(operation.kind==="checkin"){
+        renderAccessDecision(result);byId("checkin-msg").textContent="";
+        byId("checkin-consent").checked=false;
+      }else{
+        byId("enroll-msg").textContent=`Face ID is set up for ${operation.fullName}.`;
+        if(operation.resetForm)byId("enroll-form").reset();
+      }
+      await refresh();
+    }catch(error){
+      if(generation===cameraGeneration){cameraReady=false;stopCameraPolling();byId("camera-capture").disabled=false;byId("camera-capture").textContent="Reconnect camera";setCameraStatus("Capture failed",error.message);}
+    }finally{if(generation===cameraGeneration)cameraBusy=false;}
+  }
+  async function closeCameraModal(){
+    const operation=cameraOperation;const cancelled=byId("camera-status").textContent!=="Capture successful";const hadSession=operation!==null;cameraGeneration++;cameraOperation=null;cameraReady=false;cameraBusy=false;stopCameraPolling(true);
+    if(cameraModal.open)cameraModal.close();
+    if(hadSession&&token){try{await api("/api/camera/session",{method:"DELETE"});}catch{}}
+    if(operation?.kind==="checkin")byId("checkin-consent").checked=false;
+    if(operation?.kind==="enrollment"&&cancelled){byId("enroll-msg").textContent="Consent is saved; enrollment can be resumed from the Members list.";await refresh();}
+  }
+  byId("camera-capture").addEventListener("click",captureFromCameraModal);
+  byId("camera-cancel").addEventListener("click",closeCameraModal);
+  byId("camera-close").addEventListener("click",closeCameraModal);
+  cameraModal.addEventListener("cancel",event=>{event.preventDefault();closeCameraModal();});
+  function configureMode(config){
+    const real=config.recognition_mode==="buffalo_s";
+    byId("mode-badge").textContent=real?"BUFFALO S · LOCAL CAMERA":"SIMULATED · SYNTHETIC INPUTS";
+    byId("enroll-hint").textContent=real?"The submitted consent is recorded before the camera opens. Show exactly one face; no image is saved.":"Consent is required. A random synthetic 512-value vector is stored for this simulated workflow.";
+    byId("consent-copy").textContent=real?"I consent to local face processing for this non-commercial research prototype. The embedding and consent record are stored; camera images are not saved.":"Demo consent recorded. This checkbox is not a production consent workflow.";
+    byId("enroll-submit").textContent="Register Member";
+    byId("checkin-hint").textContent=real?"Look at the local camera. Exactly one face is required for this CPU recognition check.":"Select the member being checked. Revoked consent is denied without accessing a vector.";
+    byId("checkin-consent-wrap").classList.toggle("hidden",!real);
+    byId("phone").required=config.storage_mode!=="memory";
+    document.querySelector('label[for="phone"]').textContent=config.storage_mode==="memory"?"Phone (optional in this temporary demo)":"Phone";
+    byId("check-in-member-field").classList.toggle("hidden",real);
+    byId("liveness-field").classList.toggle("hidden",real);
+    byId("liveness-unavailable").classList.toggle("hidden",!real);
+    byId("check-in").textContent="Check In";
   }
   byId("login-form").addEventListener("submit", async event => {
     event.preventDefault(); byId("login-msg").textContent = "Signing in…";
-    try { const data = await api("/api/session", {method:"POST", body:JSON.stringify({username:byId("username").value,password:byId("password").value})}); token=data.access_token; byId("login").classList.add("hidden"); byId("console").classList.remove("hidden"); await refresh(); }
+    try { const data = await api("/api/session", {method:"POST", body:JSON.stringify({username:byId("username").value,password:byId("password").value})}); token=data.access_token; const config=await api("/api/config"); recognitionMode=config.recognition_mode; configureMode(config); byId("login").classList.add("hidden"); byId("console").classList.remove("hidden"); await refresh(); }
     catch(error) { byId("login-msg").textContent=error.message; }
   });
   byId("enroll-form").addEventListener("submit", async event => {
-    event.preventDefault(); byId("enroll-msg").textContent="Creating synthetic demo vector…";
+    event.preventDefault(); clearContactErrors(); byId("enroll-msg").textContent=recognitionMode==="simulated"?"Creating synthetic demo vector…":"Recording consent, then capturing locally…";
     try {
-      const vectorData=await api("/api/demo/vector",{method:"POST",body:"{}"}); demoEmbedding=vectorData.embedding;
-      const data=await api("/api/members",{method:"POST",body:JSON.stringify({full_name:byId("full-name").value,phone:byId("phone").value,email:byId("email").value||null,consent_granted:byId("consent").checked,embedding:demoEmbedding,membership_start:byId("start").value,membership_end:byId("end").value})});
-      byId("enroll-msg").textContent=`Enrolled ${data.full_name}. Keep this page open for the matching demo check-in.`; event.target.reset(); await refresh();
-    } catch(error) { demoEmbedding=null; byId("enroll-msg").textContent=error.message; }
+      const request={full_name:byId("full-name").value,phone:byId("phone").value||null,email:byId("email").value||null,consent_granted:byId("consent").checked,membership_start:byId("start").value,membership_end:byId("end").value};
+      if(recognitionMode==="simulated"){const vectorData=await api("/api/demo/vector",{method:"POST",body:"{}"});demoEmbedding=vectorData.embedding;request.embedding=demoEmbedding;}
+      const data=await api("/api/members",{method:"POST",body:JSON.stringify(request)});
+      if(recognitionMode==="simulated"){
+        demoMemberId=data.member_id;byId("enroll-msg").textContent=`Enrolled ${data.full_name}. Keep this page open for the simulated check-in.`;event.target.reset();await refresh();
+      }else{
+        byId("enroll-msg").textContent="Consent recorded. The member is pending until camera capture completes.";
+        await startCameraPreview({kind:"enrollment",memberId:data.member_id,fullName:data.full_name,resetForm:true});
+      }
+    } catch(error) {
+      demoEmbedding=null;
+      if(error.field==="phone"||error.field==="email"){
+        byId(`${error.field}-error`).textContent=error.message;
+        byId(error.field).setAttribute("aria-invalid","true");
+        byId(error.field).focus();
+        byId("enroll-msg").textContent="";
+      } else byId("enroll-msg").textContent=error.message;
+      if(recognitionMode==="buffalo_s")await refresh();
+    }
   });
+  function clearContactErrors(){
+    for(const field of ["phone","email"]){byId(`${field}-error`).textContent="";byId(field).removeAttribute("aria-invalid");}
+  }
+  for(const field of ["phone","email"])byId(field).addEventListener("input",()=>{byId(`${field}-error`).textContent="";byId(field).removeAttribute("aria-invalid");});
   byId("liveness").addEventListener("input",event=>byId("live-value").textContent=Number(event.target.value).toFixed(2));
   byId("check-in").addEventListener("click",async()=>{
     byId("checkin-msg").textContent=""; byId("decision").classList.add("hidden");
-    if(!demoEmbedding){byId("checkin-msg").textContent="Enroll a demo member in this browser session first.";return;}
-    const probe=demoEmbedding.map(value=>value+(Math.random()-0.5)*0.012);
-    try { const result=await api("/api/check-in",{method:"POST",body:JSON.stringify({embedding:probe,liveness_score:Number(byId("liveness").value)})});
-      const box=byId("decision"); box.className="notice"; box.innerHTML="";
-      const label=document.createElement("strong"); label.textContent=`${result.decision.toUpperCase()} · ${result.reason.replaceAll("_"," ")}`; box.append(label,document.createTextNode(result.member_name?` — ${result.member_name} · similarity ${result.similarity_score}`:" — no member match"));
+    if(recognitionMode==="buffalo_s"){
+      if(!byId("checkin-consent").checked){byId("checkin-msg").textContent="Ask the person in view to agree to local face processing, then confirm here.";return;}
+      await startCameraPreview({kind:"checkin"});return;
+    }
+    let request={};
+    if(recognitionMode==="simulated"){
+      const memberId=byId("check-in-member").value;
+      const member=knownMembers.find(item=>item.member_id===memberId);
+      if(!member){byId("checkin-msg").textContent="Select a member first.";return;}
+      request={member_id:memberId,liveness_score:Number(byId("liveness").value)};
+      if(member.consent_granted){
+        if(!demoEmbedding || demoMemberId!==memberId){byId("checkin-msg").textContent="This member has no synthetic check-in vector in this browser session.";return;}
+        request.embedding=demoEmbedding.map(value=>value+(Math.random()-0.5)*0.012);
+      } else if(demoMemberId===memberId){demoEmbedding=null;demoMemberId=null;}
+    }
+    try { const result=await api("/api/check-in",{method:"POST",body:JSON.stringify(request)});
+      renderAccessDecision(result);
       await refresh();
     } catch(error){byId("checkin-msg").textContent=error.message;}
   });
   byId("refresh").addEventListener("click",refresh);
-  byId("logout").addEventListener("click",async()=>{try{await api("/api/session",{method:"DELETE"});}catch{}token="";demoEmbedding=null;byId("console").classList.add("hidden");byId("login").classList.remove("hidden");byId("password").value="";});
+  byId("logout").textContent="Sign Out";
+  byId("logout").addEventListener("click",async()=>{try{await api("/api/session",{method:"DELETE"});}catch{}token="";demoEmbedding=null;demoMemberId=null;byId("console").classList.add("hidden");byId("login").classList.remove("hidden");byId("password").value="";});
+  byId("refresh").textContent="Refresh List";
   async function setStatus(id,status){try{await api(`/api/members/${id}/status`,{method:"PATCH",body:JSON.stringify({member_status:status})});await refresh();}catch(e){alert(e.message);}}
-  async function revoke(id){if(!confirm("Revoke consent and delete the synthetic vector from demo memory?"))return;try{await api(`/api/members/${id}/revoke-consent`,{method:"POST",body:JSON.stringify({confirmed:true})});await refresh();}catch(e){alert(e.message);}}
+  async function retryCapture(id){const member=knownMembers.find(item=>item.member_id===id);await startCameraPreview({kind:"enrollment",memberId:id,fullName:member?.full_name||"member",resetForm:false});}
+  async function revoke(id){const member=knownMembers.find(item=>item.member_id===id);if(!confirm(`Disable Face ID for ${member?.full_name||"this member"}?`))return;try{await api(`/api/members/${id}/revoke-consent`,{method:"POST",body:JSON.stringify({confirmed:true})});if(demoMemberId===id){demoEmbedding=null;demoMemberId=null;}await refresh();}catch(e){alert(e.message);}}
+  async function restoreConsent(id){
+    const member=knownMembers.find(item=>item.member_id===id);const name=member?.full_name||"this member";
+    if(!confirm(`Has ${name} clearly agreed to set up Face ID again? Confirm only after they have provided consent.`))return;
+    try{
+      await api(`/api/members/${id}/restore-consent`,{method:"POST",body:JSON.stringify({confirmed:true})});
+      await refresh();
+      byId("enroll-msg").textContent="Consent recorded. The member can now set up Face ID.";
+      await startCameraPreview({kind:"enrollment",memberId:id,fullName:name,resetForm:false});
+    }catch(error){alert(error.message);}
+  }
   async function refresh(){
     try {
-      const data=await api("/api/dashboard"); byId("member-count").textContent=data.member_count; byId("allowed-count").textContent=data.allowed_today; byId("denied-count").textContent=data.denied_today;
+      const data=await api("/api/dashboard"); knownMembers=data.members||[]; byId("member-count").textContent=data.member_count; byId("allowed-count").textContent=data.allowed_today; byId("denied-count").textContent=data.denied_today;
+      const memberSelect=byId("check-in-member");const previousMember=memberSelect.value||demoMemberId;memberSelect.replaceChildren();
+      for(const member of knownMembers){const option=document.createElement("option");option.value=member.member_id;option.textContent=`${member.full_name} · consent ${member.consent_granted?"granted":"revoked"}`;memberSelect.append(option);}
+      if(!knownMembers.length){const option=document.createElement("option");option.value="";option.textContent="No members available";memberSelect.append(option);}
+      if(knownMembers.some(member=>member.member_id===previousMember))memberSelect.value=previousMember;
       const list=byId("members-list"); list.replaceChildren();
       if(!data.members.length){list.innerHTML='<div class="empty">No members enrolled.</div>';}
       for(const m of data.members){
         const row=document.createElement("div");row.className="member-row";
-        const name=document.createElement("strong");name.textContent=m.full_name;
-        const phone=document.createElement("span");phone.textContent=m.phone;
-        const state=document.createElement("span");state.className="small";state.textContent=`${m.member_status} · consent ${m.consent_granted?"granted":"revoked"}`;
+        const identity=document.createElement("div");identity.className="member-identity";
+        const avatar=document.createElement("span");avatar.className="avatar";avatar.setAttribute("aria-hidden","true");avatar.textContent=String(m.full_name||"?").trim().split(/\s+/).slice(0,2).map(part=>part[0]||"").join("").toUpperCase();
+        const identityText=document.createElement("div");identityText.style.minWidth="0";
+        const name=document.createElement("strong");name.className="member-name";name.textContent=m.full_name;
+        const memberId=document.createElement("span");memberId.className="member-id";memberId.title=`Full member ID: ${m.member_id}`;memberId.textContent=`ID ${String(m.member_id).slice(0,8)}…`;
+        identityText.append(name,memberId);identity.append(avatar,identityText);
+        const phone=document.createElement("span");phone.className="small";phone.textContent=m.phone||"Demo member";
+        const state=document.createElement("span");state.className="member-state";
+        const memberState=document.createElement("span");memberState.className=`state-chip ${m.member_status==="active"?"active":"suspended"}`;memberState.textContent=m.member_status||"status unavailable";
+        const consentState=document.createElement("span");consentState.className=`state-chip ${m.consent_granted?"granted":"revoked"}`;consentState.textContent=`consent ${m.consent_granted?"granted":"revoked"}`;
+        const enrollmentState=document.createElement("span");enrollmentState.className="state-chip";enrollmentState.textContent=`enrollment ${m.enrollment_status||"enrolled"}`;
+        const membershipDates=document.createElement("span");membershipDates.className="small";membershipDates.textContent=`${m.membership_start||"—"} → ${m.membership_end||"—"}`;
+        state.append(memberState,consentState,enrollmentState,membershipDates);
         const actions=document.createElement("div");actions.className="actions";
-        const status=document.createElement("button");status.className="btn secondary";status.type="button";status.textContent=m.member_status==="active"?"Suspend":"Activate";status.onclick=()=>setStatus(m.member_id,m.member_status==="active"?"suspended":"active");actions.append(status);
-        const consent=document.createElement("button");consent.className="btn danger";consent.type="button";consent.textContent="Revoke consent";consent.disabled=!m.consent_granted;consent.onclick=()=>revoke(m.member_id);actions.append(consent);
-        row.append(name,phone,state,actions);list.append(row);
+        const status=document.createElement("button");status.className="btn secondary";status.type="button";status.textContent=m.member_status==="active"?"Pause Member":"Reactivate";status.onclick=()=>setStatus(m.member_id,m.member_status==="active"?"suspended":"active");actions.append(status);
+        if(m.consent_granted){const consent=document.createElement("button");consent.className="btn danger";consent.type="button";consent.textContent="Disable Face ID";consent.onclick=()=>revoke(m.member_id);actions.append(consent);}
+        if(recognitionMode==="buffalo_s"&&m.consent_status==="revoked"){const restore=document.createElement("button");restore.className="btn secondary";restore.type="button";restore.textContent="Set Up Face ID";restore.onclick=()=>restoreConsent(m.member_id);actions.append(restore);}
+        if(recognitionMode==="buffalo_s"&&m.consent_granted&&["pending","failed"].includes(m.enrollment_status)){const capture=document.createElement("button");capture.className="btn secondary";capture.type="button";capture.textContent="Scan Face";capture.onclick=()=>retryCapture(m.member_id);actions.append(capture);}
+        row.append(identity,phone,state,actions);list.append(row);
       }
       const logs=byId("logs");logs.replaceChildren();
-      if(!data.recent_logs.length){const tr=document.createElement("tr");tr.innerHTML='<td class="empty" colspan="6">No check-ins yet.</td>';logs.append(tr);}
-      for(const item of data.recent_logs){const tr=document.createElement("tr");const cells=[new Date(item.accessed_at).toLocaleTimeString(),item.member_name||"Unknown face",item.access_decision,item.reason.replaceAll("_"," "),item.similarity_score??"—",Number(item.liveness_score).toFixed(2)];cells.forEach((value,index)=>{const td=document.createElement("td");if(index===2){const pill=document.createElement("span");pill.className=`pill ${value==="denied"?"denied":""}`;pill.textContent=value.toUpperCase();td.append(pill);}else td.textContent=value;tr.append(td);});logs.append(tr);}
+      if(!data.recent_logs.length){const tr=document.createElement("tr");tr.innerHTML='<td class="empty" colspan="5">No check-ins yet.</td>';logs.append(tr);}
+      for(const item of data.recent_logs){const tr=document.createElement("tr");const decision=String(item.access_decision||"unknown");const reason=String(item.reason||"unspecified").replaceAll("_"," ");const cells=[new Date(item.accessed_at).toLocaleTimeString(),item.member_name||"Unknown Person",decision,reason,item.similarity_score??"—"];cells.forEach((value,index)=>{const td=document.createElement("td");if(index===2){const pill=document.createElement("span");pill.className=`pill ${reason==="unknown face"?"unknown":value==="denied"?"denied":""}`;pill.textContent=String(value||"unknown").toUpperCase();td.append(pill);}else td.textContent=String(value??"—");tr.append(td);});logs.append(tr);}
     }catch(error){byId("checkin-msg").textContent=error.message;}
   }
   const today=new Date().toISOString().slice(0,10);byId("start").value=today;const month=new Date();month.setMonth(month.getMonth()+1);byId("end").value=month.toISOString().slice(0,10);
